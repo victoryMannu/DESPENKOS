@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa História de Amor ❤️</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --color-primary: #ffc0cb; /* Rosa claro */
+            --color-secondary: #f0f8ff; /* Azul Alice */
+            --color-accent: #e91e63; /* Rosa vibrante */
+            --color-text: #4a4a4a;
+            --font-family-body: 'Poppins', sans-serif;
+            --font-family-heading: 'Playfair Display', serif;
+        }
+
+        body {
+            font-family: var(--font-family-body);
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            color: var(--color-text);
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-family: var(--font-family-heading);
+            font-size: 3.5em;
+            color: var(--color-accent);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-family: var(--font-family-heading);
+            color: var(--color-accent);
+            margin-top: 40px;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 50px 0;
+            padding: 20px;
+            list-style: none;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 4px;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .timeline-event {
+            position: relative;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            max-width: 400px;
+            text-align: left;
+            z-index: 2;
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+        
+        .timeline-event.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .timeline-event:nth-child(even) {
+            margin-left: auto;
+            text-align: right;
+        }
+        
+        .timeline-event:nth-child(odd) {
+            margin-right: auto;
+            text-align: left;
+        }
+
+        .timeline-event::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            width: 15px;
+            height: 15px;
+            background: var(--color-accent);
+            border-radius: 50%;
+            z-index: 3;
+        }
+
+        .timeline-event:nth-child(odd)::after {
+            right: -32px;
+        }
+        
+        .timeline-event:nth-child(even)::after {
+            left: -32px;
+        }
+        
+        .timeline-event h3 {
+            font-family: var(--font-family-heading);
+            color: var(--color-accent);
+            margin-top: 0;
+            font-size: 1.5em;
+        }
+
+        .timeline-event p {
+            line-height: 1.6;
+        }
+        
+        .timeline-photo-container {
+            position: relative;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        .timeline-photo {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-out;
+        }
+        
+        .timeline-photo:hover {
+            transform: scale(1.02);
+        }
+
+        .click-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--color-accent);
+            color: white;
+            font-size: 1.2em;
+            padding: 5px 8px;
+            border-radius: 50%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+        
+        .message-box {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(5px);
+            color: var(--color-text);
+            padding: 40px;
+            margin-top: 60px;
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        .message-box.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .message-box p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            font-style: italic;
+            transition: opacity 1s ease-in-out;
+        }
+
+        #secret-message {
+            display: none;
+            color: var(--color-accent);
+            font-size: 1.5em;
+        }
+
+        .reveal-button {
+            background-color: var(--color-accent);
+            color: #fff;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-family: var(--font-family-body);
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            margin-top: 20px;
+        }
+
+        .reveal-button:hover {
+            background-color: #d6004b;
+            transform: scale(1.05);
+        }
+        
+        /* Modal para a imagem */
+        .modal {
+            display: none; /* Escondido por padrão */
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            overflow: auto;
+            padding: 20px;
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            max-width: 90%;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .modal-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        
+        .modal-content p {
+            margin-top: 15px;
+            font-size: 1.2em;
+            color: var(--color-text);
+        }
+        
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: var(--color-accent);
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .close-button:hover {
+            color: #d6004b;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2em; }
+            .timeline::before { left: 50%; }
+            .timeline-event, .timeline-event:nth-child(even) {
+                max-width: 100%;
+                margin: 0 auto 50px auto;
+                text-align: center;
+            }
+            .timeline-event::after, .timeline-event:nth-child(even)::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Nossa História de Amor</h1>
+
+    <div class="timeline">
+        <div class="timeline-event">
+            <h3>Março de 2023</h3>
+            <p class="event-text">O dia em que a gente se viu pela primeira vez. Me apaixonei no mesmo instante e soube que a minha vida ia mudar.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto do primeiro encontro]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>Abril de 2023</h3>
+            <p class="event-text">Nosso primeiro beijo! Aquele momento mágico que nunca mais esqueci e marcou o início de tudo.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto do primeiro beijo]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>Junho de 2023</h3>
+            <p class="event-text">Eu te pedi em namoro pela primeira vez. Lembro-me do nervosismo, da sua surpresa e do "sim" que fez meu coração saltar.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto do pedido de namoro]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>Julho de 2023</h3>
+            <p class="event-text">O nosso pedido de namoro oficial, com as alianças. Um símbolo do nosso compromisso e de tudo que construímos juntos.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto com as alianças]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>8 de Julho de 2023</h3>
+            <p class="event-text">Ela pintou um quadro pra mim, uma pequena obra de arte com o personagem noface misturado com a noite estrelada do Van Gogh.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Foto do quadro pintado por ela]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+        
+        <div class="timeline-event">
+            <h3>30 de Julho de 2023</h3>
+            <p class="event-text">O primeiro show que fomos juntos, a energia incrível do Supla. Inesquecível!</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto do show do Supla]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>19 de Agosto de 2023</h3>
+            <p class="event-text">Nossa primeira vez no Hopi Hari. Um dia cheio de aventura e diversão, do jeitinho que a gente gosta.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto no Hopi Hari]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>29 de Agosto de 2023</h3>
+            <p class="event-text">A primeira vez que a vi dirigindo o carro dela. Uma cena que marcou, mostrando o quanto você é incrível.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto dela dirigindo]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+
+        <div class="timeline-event">
+            <h3>10 de Setembro de 2023</h3>
+            <p class="event-text">Expoflora! Um dia colorido, com muitas flores e a sua companhia, que é a mais linda de todas.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto na Expoflora]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+        
+        <div class="timeline-event">
+            <h3>20 de Setembro de 2023</h3>
+            <p class="event-text">Show do Ghost! Mais um show pra nossa lista de memórias, um momento mágico e cheio de rock.</p>
+            <div class="timeline-photo-container">
+                <img src="placeholder-image.jpg" alt="[Sua foto do show do Ghost]" class="timeline-photo">
+                <span class="click-indicator">❤️</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="message-box">
+        <h2>Uma Mensagem para Você</h2>
+        <p>
+            Esta página é um pedacinho da nossa história. Cada momento foi especial, e cada um deles me trouxe até você.
+        </p>
+        <button class="reveal-button" onclick="revealMessage()">Clique para a surpresa!</button>
+        <p id="secret-message">
+            [Escreva aqui a sua mensagem mais especial e secreta, que aparecerá quando ela clicar no botão!]
+        </p>
+    </div>
+
+</div>
+
+<div id="image-modal" class="modal" style="display: none;">
+    <span class="close-button" onclick="closeModal()">&times;</span>
+    <div class="modal-content">
+        <img id="modal-image" src="" alt="Imagem em destaque">
+        <p id="modal-text"></p>
+    </div>
+</div>
+
+<script>
+    // Script para a animação dos elementos ao rolar a página
+    const timelineEvents = document.querySelectorAll('.timeline-event');
+    const messageBox = document.querySelector('.message-box');
+    
+    const animateOnScroll = (entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target);
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(animateOnScroll, { threshold: 0.2 });
+
+    timelineEvents.forEach(event => {
+        observer.observe(event);
+    });
+    observer.observe(messageBox);
+    
+    // Script para revelar a mensagem secreta
+    function revealMessage() {
+        const secretMessage = document.getElementById('secret-message');
+        const button = document.querySelector('.reveal-button');
+        
+        secretMessage.style.display = 'block';
+        button.style.display = 'none'; // Esconde o botão após clicar
+    }
+    
+    // Scripts para o modal de imagem
+    const modal = document.getElementById('image-modal');
+    const modalImage = document.getElementById('modal-image');
+    const modalText = document.getElementById('modal-text');
+    const timelinePhotos = document.querySelectorAll('.timeline-photo-container');
+    
+    timelinePhotos.forEach(photoContainer => {
+        photoContainer.addEventListener('click', function() {
+            const imgSrc = this.querySelector('.timeline-photo').src;
+            const eventText = this.closest('.timeline-event').querySelector('.event-text').textContent;
+            
+            modalImage.src = imgSrc;
+            modalText.textContent = eventText;
+            modal.style.display = 'flex';
+        });
+    });
+    
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    // Fecha o modal se o usuário clicar fora do conteúdo
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+</script>
+
+</body>
+</html>
