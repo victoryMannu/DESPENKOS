@@ -272,6 +272,76 @@
         .close-button:hover {
             color: #d6004b;
         }
+
+        /* Modal para o Pote de Memórias */
+        .memory-modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .memory-modal-content {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .memory-modal-content h3 {
+            font-family: var(--font-family-heading);
+            color: var(--color-accent);
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .memory-modal-content p {
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .memory-modal-content img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .memory-button {
+            background-color: var(--color-accent);
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            font-family: var(--font-family-body);
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+            margin-top: 30px;
+        }
+
+        .memory-button:hover {
+            background-color: #d6004b;
+            transform: scale(1.05);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
         
         @media (max-width: 768px) {
             h1 { font-size: 2.2em; }
@@ -395,14 +465,25 @@
             [Escreva aqui a sua mensagem mais especial e secreta, que aparecerá quando ela clicar no botão!]
         </p>
     </div>
+    
+    <button class="memory-button" onclick="showRandomMemory()">Abrir um Pote de Memórias</button>
 
 </div>
 
 <div id="image-modal" class="modal" style="display: none;">
-    <span class="close-button" onclick="closeModal()">&times;</span>
+    <span class="close-button" onclick="closeModal('image-modal')">&times;</span>
     <div class="modal-content">
         <img id="modal-image" src="" alt="Imagem em destaque">
         <p id="modal-text"></p>
+    </div>
+</div>
+
+<div id="memory-modal" class="memory-modal" style="display: none;">
+    <span class="close-button" onclick="closeModal('memory-modal')">&times;</span>
+    <div class="memory-modal-content">
+        <img id="memory-image" src="placeholder-image.jpg" alt="Memória Aleatória">
+        <h3 id="memory-title"></h3>
+        <p id="memory-text"></p>
     </div>
 </div>
 
@@ -436,8 +517,8 @@
         button.style.display = 'none'; // Esconde o botão após clicar
     }
     
-    // Scripts para o modal de imagem
-    const modal = document.getElementById('image-modal');
+    // Scripts para o modal de imagem da timeline
+    const imageModal = document.getElementById('image-modal');
     const modalImage = document.getElementById('modal-image');
     const modalText = document.getElementById('modal-text');
     const timelinePhotos = document.querySelectorAll('.timeline-photo-container');
@@ -449,18 +530,67 @@
             
             modalImage.src = imgSrc;
             modalText.textContent = eventText;
-            modal.style.display = 'flex';
+            imageModal.style.display = 'flex';
         });
     });
     
-    function closeModal() {
-        modal.style.display = 'none';
+    // Scripts para o Pote de Memórias
+    const memoryModal = document.getElementById('memory-modal');
+    const memoryImage = document.getElementById('memory-image');
+    const memoryTitle = document.getElementById('memory-title');
+    const memoryText = document.getElementById('memory-text');
+
+    const memories = [
+        {
+            title: "Aquela nossa primeira viagem",
+            text: "Lembro de cada detalhe da nossa primeira viagem, como se fosse hoje. Foi a primeira vez que exploramos o mundo juntos, e soube que era só o começo.",
+            image: "placeholder-viagem.jpg"
+        },
+        {
+            title: "O dia que cozinhamos juntos",
+            text: "Nossa tentativa de cozinhar algo novo foi um desastre divertido, mas foi o melhor jantar que já tivemos. O que importa é a companhia!",
+            image: "placeholder-cozinha.jpg"
+        },
+        {
+            title: "Aquele filme que vimos",
+            text: "O filme pode não ter sido o melhor, mas as suas piadas e comentários durante a sessão fizeram meu dia. Adoro rir com você.",
+            image: "placeholder-filme.jpg"
+        },
+        {
+            title: "O nosso primeiro apelido",
+            text: "Nossos apelidos bobos são uma das minhas coisas favoritas. Lembro de quando ele surgiu e do quanto a gente riu. É um segredo só nosso.",
+            image: "placeholder-apelido.jpg"
+        },
+        {
+            title: "Aquele abraço que mudou tudo",
+            text: "Um abraço seu é o meu refúgio. Lembro daquele abraço específico que me fez sentir que eu estava no lugar certo, com a pessoa certa.",
+            image: "placeholder-abraco.jpg"
+        },
+    ];
+
+    function showRandomMemory() {
+        const randomIndex = Math.floor(Math.random() * memories.length);
+        const randomMemory = memories[randomIndex];
+
+        memoryImage.src = randomMemory.image;
+        memoryTitle.textContent = randomMemory.title;
+        memoryText.textContent = randomMemory.text;
+
+        memoryModal.style.display = 'flex';
+    }
+    
+    // Função para fechar qualquer modal
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
     }
 
     // Fecha o modal se o usuário clicar fora do conteúdo
     window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
+        if (event.target == imageModal) {
+            closeModal('image-modal');
+        }
+        if (event.target == memoryModal) {
+            closeModal('memory-modal');
         }
     }
 </script>
